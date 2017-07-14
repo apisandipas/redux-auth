@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { reduxForm } from 'redux-form'
+import { reduxForm, Field } from 'redux-form'
 
 class SignIn extends Component {
 
@@ -8,26 +8,63 @@ class SignIn extends Component {
     // Need to do something to log user in
   }
 
+  renderField (field) {
+    const { meta: { touched, error } } = field
+    const className = `form-group ${(touched && error) ? 'has-danger' : ''}`
+
+    return (
+      <fieldset className={className}>
+        <label htmlFor={field.label}>{field.label}</label>
+        <input
+          id={field.label}
+          type={field.type}
+          className='form-control'
+          {...field.input}
+        />
+        <div className='text-help'>
+          {touched && error}
+        </div>
+      </fieldset>
+    )
+  }
+
   render () {
-    const { handleSubmit, fields: { email, password } } = this.props
-    console.log(this.props)
-    return (  
+    const { handleSubmit } = this.props
+    return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className='form-group'>
-          <label htmlFor='email'>Email:</label>
-          <input {...email} type='text' className='form-control' />
-        </fieldset>
-        <fieldset className='form-group'>
-          <label htmlFor='password'>Password:</label>
-          <input {...password} type='password' className='form-control' />
-        </fieldset>
+        <Field
+          name='email'
+          label='Email'
+          type='text'
+          component={this.renderField}
+        />
+        <Field
+          name='password'
+          label='Password'
+          type='password'
+          component={this.renderField}
+        />
         <button type='submit' className='btn btn-primary'>Sign In</button>
       </form>
     )
   }
 }
 
+function validate (values) {
+  const errors = {}
+
+  if (!values.email) {
+    errors.email = 'You must provide an email to sign in!'
+  }
+
+  if (!values.password) {
+    errors.password = 'You must provide a password to sign in!'
+  }
+
+  return errors
+}
+
 export default reduxForm({
-  form: 'SignIn',
-  fields: ['email', 'password']
+  validate,
+  form: 'SignIn'
 })(SignIn)
