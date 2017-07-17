@@ -3,13 +3,12 @@ import { reduxForm, Field } from 'redux-form'
 import * as actions from '../../actions'
 import { connect } from 'react-redux'
 
-class SignIn extends Component {
+class SignUp extends Component {
 
-  handleFormSubmit ({ email, password }) {
-    // Need to do something to log user in
-    this.props.signInUser({ email, password })
+  handleFormSubmit ({ email, password, passwordConfirm }) {
+    console.log(email, password, passwordConfirm)
   }
-
+  
   renderField (field) {
     const { meta: { touched, error } } = field
     const className = `form-group ${(touched && error) ? 'has-danger' : ''}`
@@ -30,16 +29,6 @@ class SignIn extends Component {
     )
   }
 
-  renderAlert () {
-    if (this.props.errorMessage) {
-      return (
-        <div className='alert alert-danger'>
-          <strong>Opps!</strong> {this.props.errorMessage}
-        </div>
-      )
-    }
-  }
-
   render () {
     const { handleSubmit } = this.props
     return (
@@ -56,8 +45,13 @@ class SignIn extends Component {
           type='password'
           component={this.renderField}
         />
-        {this.renderAlert()}
-        <button type='submit' className='btn btn-primary'>Sign In</button>
+        <Field
+          name='passwordConfirm'
+          label='Password Confirm'
+          type='password'
+          component={this.renderField}
+        />
+        <button type='submit' className='btn btn-primary'>Sign Up</button>
       </form>
     )
   }
@@ -65,27 +59,30 @@ class SignIn extends Component {
 
 function validate (values) {
   const errors = {}
+  console.log(values)
 
   if (!values.email) {
-    errors.email = 'You must provide an email to sign in!'
+    errors.email = 'You must provide an email to sign up!'
   }
 
   if (!values.password) {
-    errors.password = 'You must provide a password to sign in!'
+    errors.password = 'You must provide a password to sign up!'
+  }
+
+  if (!values.passwordConfirm) {
+    errors.passwordConfirm = 'Please enter a password confirmation!'
+  }
+
+  if (values.password !== values.passwordConfirm) {
+    errors.password = 'Passwords must match!'
   }
 
   return errors
 }
-
-function mapStateToProps (state) {
-  return {
-    errorMessage: state.auth.error
-  }
-}
-
+ 
 export default reduxForm({
   validate,
-  form: 'SignIn'
+  form: 'SignUp'
 })(
-  connect(mapStateToProps, actions)(SignIn)
+  connect(null, actions)(SignUp)
 )
