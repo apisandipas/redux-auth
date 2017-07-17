@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 
 class SignUp extends Component {
 
-  handleFormSubmit ({ email, password, passwordConfirm }) {
-    console.log(email, password, passwordConfirm)
+  handleFormSubmit (fieldValues) {
+    this.props.signUpUser(fieldValues)
   }
   
   renderField (field) {
@@ -23,10 +23,20 @@ class SignUp extends Component {
           {...field.input}
         />
         <div className='text-help'>
-          {touched ? error : error}
+          {touched && error}
         </div>
       </fieldset>
     )
+  }
+
+  renderAlert () {
+    if (this.props.errorMessage) {
+      return (
+        <div className='alert alert-danger'>
+          <strong>Opps!</strong> {this.props.errorMessage}
+        </div>
+      )
+    }
   }
 
   render () {
@@ -51,6 +61,7 @@ class SignUp extends Component {
           type='password'
           component={this.renderField}
         />
+        {this.renderAlert()}
         <button type='submit' className='btn btn-primary'>Sign Up</button>
       </form>
     )
@@ -79,10 +90,16 @@ function validate (values) {
 
   return errors
 }
+
+function mapStateToProps (state) {
+  return { 
+    errorMessage: state.auth.error 
+  }
+}
  
 export default reduxForm({
   validate,
   form: 'SignUp'
 })(
-  connect(null, actions)(SignUp)
+  connect(mapStateToProps, actions)(SignUp)
 )

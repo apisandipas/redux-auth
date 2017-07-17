@@ -24,7 +24,7 @@ class SignIn extends Component {
           {...field.input}
         />
         <div className='text-help'>
-          {touched ? error : error}
+          {touched && error}
         </div>
       </fieldset>
     )
