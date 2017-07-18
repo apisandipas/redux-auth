@@ -18,8 +18,7 @@ describe('Actions', () => {
   })
 
   describe('signOutUser', () => {
-    // TODO: figure out a better way to work with localStorage
-    xit('has the correct type', () => {
+    it('has the correct type', () => {
       const action = signOutUser()
       expect(action.type).to.equal(UNAUTH_USER)
     })
