@@ -62,9 +62,9 @@ export function fetchMessage () {
       headers: { authorization: localStorage.getItem('token') }
     })
       .then(response => {
-        dispatch({ 
-          type: FETCH_MESSAGE, 
-          payload: response.data.message 
+        dispatch({
+          type: FETCH_MESSAGE,
+          payload: response.data.message
         })
       })
   }
