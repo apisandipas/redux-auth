@@ -8,7 +8,7 @@ function authReducer (state = {}, action) {
       return { ...state, authenticated: false, error: '' }
     case AUTH_ERROR:
       return { ...state, error: action.payload }
-    default: 
+    default:
       return state
   }
 }
