@@ -2,10 +2,9 @@ import { expect } from '../test_helper'
 import authReducer from '../../src/reducers/authReducer'
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from '../../src/actions/types'
 
-/* global describe, beforeEach, it */
+/* global describe, it */
 
 describe('Auth Reducer', () => {
-
   it('handles action with unknown type', () => {
     expect(authReducer(undefined, [])).to.eql({})
   })
@@ -24,5 +23,4 @@ describe('Auth Reducer', () => {
     const action = { type: AUTH_ERROR, payload: 'Something went wrong' }
     expect(authReducer([], action)).to.eql({error: 'Something went wrong'})
   })
-  
 })

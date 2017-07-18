@@ -43,7 +43,7 @@ class SignIn extends Component {
   render () {
     const { handleSubmit } = this.props
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+      <form className='SignIn' onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <Field
           name='email'
           label='Email'
