@@ -42,7 +42,7 @@ class SignUp extends Component {
   render () {
     const { handleSubmit } = this.props
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+      <form className='SignUp' onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <Field
           name='email'
           label='Email'
@@ -70,7 +70,6 @@ class SignUp extends Component {
 
 function validate (values) {
   const errors = {}
-  console.log(values)
 
   if (!values.email) {
     errors.email = 'You must provide an email to sign up!'

@@ -34,11 +34,11 @@ describe('SignIn', () => {
     })
 
     it('shows an error message on email field', () => {
-       expect(component.find('input[name="email"] + .text-help')).to.contain('You must provide an email to sign in!')
+      expect(component.find('input[name="email"] + .text-help')).to.contain('You must provide an email to sign in!')
     })
 
     it('shows an error message on password field', () => {
-       expect(component.find('input[name="password"] + .text-help')).to.contain('You must provide a password to sign in!')
+      expect(component.find('input[name="password"] + .text-help')).to.contain('You must provide a password to sign in!')
     })
   })
 
